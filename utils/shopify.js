@@ -2,6 +2,7 @@ import { DeliveryMethod, LogSeverity, shopifyApi } from "@shopify/shopify-api";
 import "@shopify/shopify-api/adapters/node";
 import appUninstallHandler from "./webhooks/app_uninstalled";
 import ordersCreateHandler from "./webhooks/orders_create";
+import productsUpdateHandler from "./webhooks/products_update";
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -43,6 +44,11 @@ shopify.webhooks.addHandlers({
     deliveryMethod: DeliveryMethod.Http,
     callbackUrl: "/api/webhooks/orders_create",
     callback: ordersCreateHandler,
+  },
+  PRODUCTS_UPDATE: {
+    deliveryMethod: DeliveryMethod.Http,
+    callbackUrl: "/api/webhooks/products_update",
+    callback: productsUpdateHandler,
   },
 });
 
