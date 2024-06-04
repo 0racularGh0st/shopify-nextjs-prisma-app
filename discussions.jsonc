@@ -1,0 +1,41 @@
+//Api for adding products to our backend (non edited)
+
+{
+    "body": {
+            //... product json
+        }
+}
+
+//Api for publishing to online store and/ or activations
+{
+    "body": {
+        "product_id": "1234",
+        "title": "new title", //if null ignore, has to be non-null if online_store is true
+        "description": "new description", // if null ignore, has to be non-null if online_store is true
+        "online_store": true, // or false
+        "activation_ids": ["1234", "5678"] // or empty 
+    }
+}
+
+// Listing sales channel products
+/get-products-details added to saleschannel 
+Response:
+{
+    "body": [
+        {
+            "product_id": "1234",
+            "online_store": true,
+            "activation_ids": ["1234", "5678"]
+        },
+        {
+            "product_id": "12345",
+            "online_store": true,
+            "activation_ids": ["1234", "5678"]
+        }
+    ]
+}
+
+
+product | online-store | activations | store-name | status | store-id
+
+status: pending | approved | rejected

@@ -9,6 +9,7 @@ import prisma from "./prisma.js";
  * @returns {Promise<boolean>} Returns true if the operation was successful.
  */
 const storeSession = async (session) => {
+  console.log(JSON.stringify(session, null, 2));
   await prisma.session.upsert({
     where: { id: session.id },
     update: {

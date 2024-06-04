@@ -10,10 +10,8 @@ const App = ({ Component, pageProps }) => {
       <PolarisProvider i18n={translations}>
         <AppBridgeProvider>
           <ui-nav-menu>
-            <Link href="/debug">Debug Cards</Link>
-            <Link href="/connect">Connect</Link>
             <Link href="/selectProducts">Select Products</Link>
-
+            <Link href="/debug">Debug Cards</Link>
           </ui-nav-menu>
           <Component {...pageProps} />
         </AppBridgeProvider>

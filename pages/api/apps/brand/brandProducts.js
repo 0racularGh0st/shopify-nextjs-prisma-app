@@ -11,40 +11,57 @@ const handler = async (req, res) => {
         req,
         res,
       });
-      const products = await client.request(`query {
+
+      const products = await client.request(`{
         products(first: 10, reverse: true, query: "status:active") {
           edges {
             node {
               id
               title
+              description
               handle
-              descriptionHtml
-              status
-              images(first: 1) {
+              createdAt
+              updatedAt
+              vendor
+              productType
+              tags
+              variants(first: 10) {
                 edges {
                   node {
                     id
+                    title
+                    sku
+                    price
+                    compareAtPrice
+                    weight
+                    weightUnit
+                    inventoryQuantity
+                    inventoryItem {
+                      id
+                      tracked
+                    }
+                    selectedOptions {
+                      name
+                      value
+                    }
+                    image {
+                      src
+                      altText
+                    }
+                  }
+                }
+              }
+              images(first: 10) {
+                edges {
+                  node {
                     src
                     altText
                   }
                 }
               }
-              variants(first: 250) {
-                edges {
-                node {
-                    id
-                    title
-                    inventoryQuantity
-                 }
-                }
-             }
-              resourcePublicationOnCurrentPublication {
-                publication {
-                  name
-                  id
-                }
-                publishDate
-                isPublished
+              options {
+                name
+                values
               }
             }
           }

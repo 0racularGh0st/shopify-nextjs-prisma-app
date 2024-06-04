@@ -24,7 +24,6 @@ const ConnectIndex = () => {
   );
 
   return (
-    <Page title="Connect">
         <AccountConnection
             accountName={accountName}
             connected={connected}
@@ -37,7 +36,6 @@ const ConnectIndex = () => {
             details={details}
             termsOfService={terms}
         />
-    </Page>
   );
 }
 
