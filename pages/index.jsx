@@ -16,7 +16,7 @@ import {
 } from "@shopify/polaris";
 import {Modal, TitleBar, useAppBridge} from '@shopify/app-bridge-react';
 // import { ExternalIcon } from "@shopify/polaris-icons";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/common/hooks/useAuth";
 import { useSignIn } from "@/common/hooks/useSignIn";
@@ -39,27 +39,36 @@ const HomePage = () => {
   const accountName = "";
   const [user, triggerSignin, isSigningIn] = useDataFetcher({}, "/api/apps/user/login");
   
+  useEffect(() => {
+    if (clubhouseUser?.id) {
+      setConnected(true);
+      return;
+    }
+    setConnected(false);
+  }, [clubhouseUser])
   const handleModalOpen = async () => {
     shopify.modal.show('my-modal')
   };
   const handleSubmit = async () => {
     //From FE
-    // signin({email, password}).then((user) => {
-    //   console.log({ user });
-    // }).catch((error) => {
-    //   console.log({ error });
-    // });
-    // From API side 
-    const res = await triggerSignin({
-      method: 'POST',
-      body: JSON.stringify({email, password}),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
+    const res = await signin({email, password}).then((user) => {
+      console.log({ user });
+      return user;
+    }).catch((error) => {
+      console.log({ error });
+      return null;
     });
-    if (res?.user) {
-      setClubhouseUser(res.user);
+    // From API side 
+    // const res = await triggerSignin({
+    //   method: 'POST',
+    //   body: JSON.stringify({email, password}),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Accept": "application/json",
+    //   },
+    // });
+    if (res) {
+      setClubhouseUser(res);
       setConnected(true);
     }
     shopify.modal.hide('my-modal')

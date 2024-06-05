@@ -94,8 +94,8 @@ import {
         >
           <IndexTable.Cell>
             <Thumbnail
-              source={images?.edges[0]?.node.src || ImageIcon}
-              alt={images?.edges[0]?.node.altText || ''}
+              source={images && images[0]?.src || ImageIcon}
+              alt={images && images[0]?.altText || ''}
               size="small"
             />
           </IndexTable.Cell>
@@ -104,16 +104,16 @@ import {
           </IndexTable.Cell>
           {/* <IndexTable.Cell>{descriptionHtml}</IndexTable.Cell> */}
           <IndexTable.Cell>
-            {/* {variants.edges.map((variant) => variant.node.title).join(', ')} */}
-            {variants.edges.map((variant) => (
-              <Text key={variant.node.id}>
-                {variant.node.title}
+            {/* {variants.map((variant) => variant.title).join(', ')} */}
+            {variants.map((variant) => (
+              <Text key={variant.id}>
+                {variant.title}
               </Text>
             ))}
           </IndexTable.Cell>
           <IndexTable.Cell>
-            {variants.edges.reduce(
-              (acc, variant) => acc + variant.node.inventoryQuantity,
+            {variants.reduce(
+              (acc, variant) => acc + variant.inventoryQuantity,
               0
             )}
           </IndexTable.Cell>
