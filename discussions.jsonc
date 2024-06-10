@@ -18,7 +18,7 @@
 }
 
 // Listing sales channel products
-/get-products-details added to saleschannel 
+/get-products-details-added-to-saleschannel 
 Response:
 {
     "body": [
@@ -36,6 +36,10 @@ Response:
 }
 
 
+{
+    "product_id": "1234",
+    
+}
 product | online-store | activations | store-name | status | store-id
 
 status: pending | approved | rejected

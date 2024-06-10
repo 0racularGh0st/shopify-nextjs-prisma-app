@@ -17,10 +17,11 @@ import {
 import {Modal, TitleBar, useAppBridge} from '@shopify/app-bridge-react';
 // import { ExternalIcon } from "@shopify/polaris-icons";
 import { useCallback, useEffect, useState } from "react";
+import { Logo } from "@/components/icons/Logo";
 import { useRouter } from "next/router";
 import { useAuth } from "@/common/hooks/useAuth";
 import { useSignIn } from "@/common/hooks/useSignIn";
-import useDataFetcher from "@/common/hooks/useDataFetcher";
+import { useGetIsSubscribed } from "@/common/hooks/useGetIsSubscribed";
 
 export async function getServerSideProps(context) {
   //DO NOT REMOVE THIS.
@@ -30,25 +31,29 @@ export async function getServerSideProps(context) {
 const HomePage = () => {
   const router = useRouter();
   const isDev = process.env.NODE_ENV === "development";
+  const showDevComponents = false;
   const { clubhouseUser, setClubhouseUser } = useAuth();
   const [connected, setConnected] = useState(false);
+  const isSubscribed = useGetIsSubscribed();
   const { signin, isLoading } = useSignIn();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const shopify = useAppBridge();
   const accountName = "";
-  const [user, triggerSignin, isSigningIn] = useDataFetcher({}, "/api/apps/user/login");
   
   useEffect(() => {
+    console.log({ clubhouseUser, isSubscribed });
     if (clubhouseUser?.id) {
       setConnected(true);
       return;
     }
     setConnected(false);
-  }, [clubhouseUser])
+  }, [clubhouseUser]);
+
   const handleModalOpen = async () => {
     shopify.modal.show('my-modal')
   };
+
   const handleSubmit = async () => {
     //From FE
     const res = await signin({email, password}).then((user) => {
@@ -58,15 +63,7 @@ const HomePage = () => {
       console.log({ error });
       return null;
     });
-    // From API side 
-    // const res = await triggerSignin({
-    //   method: 'POST',
-    //   body: JSON.stringify({email, password}),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Accept": "application/json",
-    //   },
-    // });
+    
     if (res) {
       setClubhouseUser(res);
       setConnected(true);
@@ -94,7 +91,8 @@ const HomePage = () => {
     <>
       <Page title="Home">
         <Layout>
-        {connected && <Layout.Section variant="fullWidth">
+        <Logo width={80} height={40} style={{ marginTop: "24px" }} />
+        {connected && isSubscribed && <Layout.Section variant="fullWidth">
             <Card padding={0}>
               <BlockStack gap="200">
                 <Box background="bg-fill-info">
@@ -124,6 +122,36 @@ const HomePage = () => {
               </BlockStack>
             </Card>
           </Layout.Section>}
+          {connected && !isSubscribed && <Layout.Section variant="fullWidth">
+            <Card padding={0}>
+              <BlockStack gap="200">
+                <Box background="bg-fill-critical">
+                  <div
+                    style={{ padding: "16px", color: "white" }}
+                  >
+                    <Text as="h2" variant="headingMd">
+                      Welcome to LDC Omnichannel! 
+                    </Text>
+                  </div>
+                </Box>
+                <div style={{ padding: "0px 16px 16px 16px"}}>
+                  <Text>It seems like you don't have an Active Clubhouse subscription to access Omnichannel Features. Please subscribe to Clubhouse or Renew your subscription!</Text>
+                  <div style={{ marginTop: "16px "}}>
+                    <InlineStack wrap={false} align="start">
+                      <Button
+                        variant="primary"
+                        onClick={() => {
+                          window.open('https://clubhouse.lonedesignclub.com/', '_blank');
+                        }}
+                      >
+                        Subscribe to Clubhouse
+                      </Button>
+                    </InlineStack>
+                  </div>
+                </div>
+              </BlockStack>
+            </Card>
+          </Layout.Section>}
           {!connected && <Layout.Section variant="fullWidth">
           <AccountConnection
             accountName={accountName}
@@ -138,7 +166,7 @@ const HomePage = () => {
             termsOfService={terms}
         />
           </Layout.Section>}
-          {isDev ? (
+          {isDev && showDevComponents ? (
             <Layout.Section variant="fullWidth">
               <Card>
                 <BlockStack gap="200">
@@ -167,6 +195,7 @@ const HomePage = () => {
           
           <Modal id="my-modal" variant="base">
             <BlockStack align="center" inlineAlign="center">
+              <Logo width={80} height={40} style={{ marginTop: "24px" }} />
               <div style={{ maxWidth: '400px', padding: '48px' }}>
                 <Form onSubmit={handleSubmit}>
                   <FormLayout>

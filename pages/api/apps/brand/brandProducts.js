@@ -19,7 +19,6 @@ const handler = async (req, res) => {
             node {
               createdAt
               description
-              descriptionHtml
               featuredImage {
                 altText
                 height
@@ -30,7 +29,7 @@ const handler = async (req, res) => {
                 url
                 width
               }
-              admin_graphql_api_id: id
+              adminGraphqlApiId: id
               id
               resourcePublicationOnCurrentPublication {
                 publication {
@@ -43,7 +42,6 @@ const handler = async (req, res) => {
               images(first: 10) {
                 edges {
                   node {
-                    altText
                     height
                     id
                     originalSrc
@@ -78,7 +76,6 @@ const handler = async (req, res) => {
                     availableForSale
                     barcode
                     image {
-                      altText
                       height
                       id
                       originalSrc
@@ -99,6 +96,8 @@ const handler = async (req, res) => {
                     weight
                     weightUnit
                     inventoryQuantity
+                    inventoryManagement
+                    inventoryPolicy
                   }
                 }
               }

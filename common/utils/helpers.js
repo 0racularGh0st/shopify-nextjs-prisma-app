@@ -46,3 +46,8 @@ export async function handleResponse (response) {
   
     throw new Error(errorObject.statusText, { cause: errorObject });
   }
+  export const isFutureDate = (date) => {
+    const givenDate = new Date(date);
+    const currentDate = new Date();
+    return givenDate > currentDate;
+  }
