@@ -26,7 +26,7 @@ const handler = async (req, res) => {
         variables: {
             id: productId,
             input: {
-            publicationId: "gid://shopify/Publication/234266919215"
+            publicationId: process.env.NEXT_PUBLIC_PUBLICATION_ID,
             }
         }
       }

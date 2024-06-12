@@ -1,46 +1,32 @@
-"use client";
-import { useState } from "react";
-import { handleResponse } from "@/common/utils/network/responseHandler";
+import useSWR from "swr";
+import { useEffect, useState } from "react";
 import { convertObjectFieldNamesToCamelCase } from "@/common/utils/helpers";
 import { activationsUrl } from "@/common/utils/network/endpoints";
-import { useAuth } from "@/common/hooks/useAuth";
+import { fetcher } from "@/common/utils/network/baseFetcher";
+import { httpRequestMethods } from "@/common/utils/network/constants";
 
 export const useGetActivations = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { GET } = httpRequestMethods;
+  const activationsFetcher = async (key) => {
+    return fetcher(key, {
+      arg: {
+        method: GET,
+      },
+    });
+  }
   const [activations, setActivations] = useState([]);
-  const { setClubhouseUser } = useAuth();
-  const getActivations = async (token) => {
-    setIsLoading(true);
-    const res = await fetch(activationsUrl, {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-      const {
-        code, response,
-      } = await handleResponse(res);
-      const bookings = response;
-      if (code === 200 && bookings) {
-        setIsLoading(false);
-        console.log({ bookings });
-        const allowedBookings = bookings?.data?.data.filter((booking) => booking?.status === 'Paid' && booking.state !== 'completed');
-        console.log({ allowedBookings });
-        const allowedBookingsTransformed = convertObjectFieldNamesToCamelCase(allowedBookings);
-        setActivations(allowedBookingsTransformed);
-        return allowedBookingsTransformed;
-      } 
-      if (code === 401) {
-        setClubhouseUser('{}');
-      }
-      setIsLoading(false);
-      return null
-  };
+  const { data, isLoading } = useSWR(activationsUrl, activationsFetcher);
+  
+  useEffect(() => {
+    if (data?.data?.data) {
+      const allowedBookings = data?.data?.data.filter((booking) => booking?.status === 'Paid' && booking.state !== 'completed');
+      const allowedBookingsTransformed = convertObjectFieldNamesToCamelCase(allowedBookings);
+      setActivations(allowedBookingsTransformed);
+    }
+  }, [data])
+
 
   return {
-    getActivations,
     isLoading,
     activations,
   }

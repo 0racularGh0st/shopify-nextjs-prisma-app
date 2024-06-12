@@ -19,6 +19,7 @@ const handler = async (req, res) => {
             node {
               createdAt
               description
+              descriptionHtml
               featuredImage {
                 altText
                 height
@@ -29,7 +30,7 @@ const handler = async (req, res) => {
                 url
                 width
               }
-              adminGraphqlApiId: id
+              admin_graphql_api_id: id
               id
               resourcePublicationOnCurrentPublication {
                 publication {
@@ -112,7 +113,6 @@ const handler = async (req, res) => {
           }
         }
       }`);
-      // const productsList = products?.data?.products?.edges.map((product) => product.node) || [];
       const productsList = products?.data?.products?.edges.map((product) => { 
        const node =  product.node;
        node.id = node.id.split("/").pop() || node.id;

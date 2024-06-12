@@ -2,7 +2,6 @@ import {
     Button,
     Card,
     Checkbox,
-    InlineStack,
     Layout,
     Page,
     Text,
@@ -12,25 +11,35 @@ import {
     Thumbnail,
     Toast,
     Frame,
-    TextField,
+    Modal,
+    InlineStack,
   } from "@shopify/polaris";
+  import {
+    CheckCircleIcon, ClockIcon
+  } from '@shopify/polaris-icons';
   import { useRouter } from "next/router";
-  import { useEffect, useState, useCallback } from "react";
+  import { useEffect, useState, useCallback, useMemo } from "react";
   import { useDataFetcher } from "@/common/hooks/useDataFetcher";
   import { ImageIcon } from "@shopify/polaris-icons";
-  import {Modal, TitleBar, useAppBridge} from '@shopify/app-bridge-react';
   import { useGetActivations } from "@/common/hooks/useGetActivations";
-  import { useAuth } from "@/common/hooks/useAuth";
-  // const isDebug = false;
-  const publicationId = "gid://shopify/Publication/234266919215";
+  import { useGetShopifyProducts } from "@/common/hooks/useGetShopifyProducts";
+  import { useStoreProduct } from "@/common/hooks/useStoreProduct";
+  import { useUpdateProduct } from "@/common/hooks/useUpdateProduct";
+  import RichTextEditor from "@/components/editor";
+  import { arraysEqual } from "@/common/utils/helpers";
 
   const SelectProductsIndex = () => {
+    const { activations } = useGetActivations();
+    const { shopifyProducts, refetchShopifyProducts, isLoading: isFetchingShopifyProducts } = useGetShopifyProducts();
+    const { storeProduct, isStoringProduct } = useStoreProduct();
+    const { updateProduct, isUpdatingProduct } = useUpdateProduct();
+    console.log({ activations, shopifyProducts });
     const resourceName = {
       singular: 'product',
       plural: 'products',
     };
     const router = useRouter();
-    const [productsJson, setProductsJson] = useState("");
+
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [products, fetchProducts, isLoading] = useDataFetcher({ products: []}, "/api/apps/brand/brandProducts");
     const [publishData, publishProduct, isPublishing] = useDataFetcher({}, "/api/apps/brand/publishProducts");
@@ -38,17 +47,50 @@ import {
     const [toastContent, setToastContent] = useState('');
     const [toastError, setToastError] = useState(false);
     const [selectedProductForPublish, setSelectedProductForPublish] = useState('');
+    const [selectedProductForPublishId, setSelectedProductForPublishId] = useState('');
     const [checkedForOnlineStore, setCheckedForOnlineStore] = useState(false);
     const [checkForActivations, setCheckForActivations] = useState(false);
     const [selectedActivations, setSelectedActivations] = useState(new Set());
+    const [selectedProductDescription, setSelectedProductDescription] = useState('');
     const [newDescription, setNewDescription] = useState('');
-    useEffect(() => {
-      console.log({ selectedActivations });
-    }, [selectedActivations])
-    const { getActivations, activations } = useGetActivations();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState({});
+    const handleChange = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
 
-    const shopify = useAppBridge();
-    const {clubhouseUser} = useAuth();
+    const allowSave = useMemo(() => {
+      let result = false;
+      const platformProduct = shopifyProducts.find((product) => product.productId === selectedProductForPublishId);
+      console.log({ selectedProduct, shopifyProducts, newDescription, selectedProductDescription, selectedActivations, checkedForOnlineStore, checkForActivations, platformProduct})
+      if (!platformProduct && !checkedForOnlineStore && !checkForActivations) {
+        return false;
+      }
+      if (!platformProduct && checkedForOnlineStore && newDescription !== selectedProductDescription) {
+        result = true;
+      }
+      const selectedActivationsArray = Array.from(selectedActivations);
+      if ((!platformProduct || !platformProduct?.activationIds) && checkForActivations && selectedActivationsArray?.length > 0) {
+        result = true;
+      }
+      if (platformProduct && platformProduct?.activationIds && platformProduct?.activationIds?.length > 0 && !arraysEqual(selectedActivationsArray, platformProduct?.activationIds)) {
+        result = true;
+      }
+      if (platformProduct && platformProduct?.onlineStore !== checkedForOnlineStore) {
+        result = true;
+      }
+      if (platformProduct && checkedForOnlineStore && newDescription !== selectedProductDescription) {
+        result = true;
+      }
+      if (platformProduct && !checkForActivations && platformProduct?.activationIds?.length > 0) {
+        result = true;
+      }
+      console.log({ result });
+      return result;
+    }, [selectedProduct, shopifyProducts, newDescription, selectedProductDescription, selectedActivations, checkedForOnlineStore, checkForActivations ]);
+    useEffect(() => {
+      fetchProducts();
+    }, []);
+
+
     const handleCheckedForOnlineStore = useCallback(
       (newChecked) => setCheckedForOnlineStore(newChecked),
       [],
@@ -69,15 +111,9 @@ import {
         }
         setSelectedActivations(checkedActivations);
       }, [selectedActivations]);
-    useEffect(() => {
-      fetchProducts();
-    }, []);
-    useEffect(() => {
-      console.log({ products });
-      if (products) {
-        setProductsJson(JSON.stringify(products, null, 2));
-      }
-    }, [products])
+
+    
+
     
     const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(products?.products || []);
@@ -87,63 +123,99 @@ import {
       setSelectedProducts(selected);
     }, [selectedResources]);
 
-    const publishHandler = async (event, productId, title = '') => {
+    const publishHandler = async (event, product) => {
       event?.preventDefault();
       event?.stopPropagation();
+
+      const { id, title, descriptionHtml } = product;
+      const platformProduct = shopifyProducts.find((shopifyProduct) => shopifyProduct.productId === id);
+      const activationIds = platformProduct?.activationIds || [];
       setSelectedProductForPublish(title);
-      // Add product to sales channel
-      // const postOptions = {
-      //   headers: {
-      //     Accept: "application/json",
-      //     "Content-Type": "application/json",
-      //   },
-      //   method: "POST",
-      //   body: JSON.stringify({ productId }),
-      // };
-      // try {
-      //   const res = await publishProduct(postOptions);
-      //   console.log({ res });
-        
-      // } catch (e) {
-      //   console.error({ e });
-      //   setToastContent(`Failed to publish ${title}.`);
-      //   setToastError(true);
-      //   setToastActive(true);
-      // }
-      // Open Modal
-      if (!clubhouseUser?.token) {
-        return;
-      }
-      await getActivations(clubhouseUser?.token);
-      setCheckedForOnlineStore(false); //have to initialise with the selected product's value
-      setCheckForActivations(false); //have to initialise with the selected product's value
-      setSelectedActivations(new Set()); //have to initialise with the selected product's value
-      shopify.modal.show('publish-modal');
-      //code to use fr success
-      // if (res.success) {
-      //   setToastContent(`${title} published successfully!`);
-      //   setToastError(false);
-      // } else {
-      //   setToastContent(`Failed to publish ${title}.`);
-      //   setToastError(true);
-      // }
-      // setToastActive(true);
-      // End of code to use
+      setSelectedProductForPublishId(id);
+      setSelectedProductDescription(platformProduct?.description ?? descriptionHtml);
+      setSelectedProduct(product);
+      setCheckedForOnlineStore(!!platformProduct?.onlineStore); //have to initialise with the selected product's value
+      setCheckForActivations(!!platformProduct?.activationIds); //have to initialise with the selected product's value
+      setSelectedActivations(new Set(activationIds)); //have to initialise with the selected product's value
+      setModalOpen(true);
+    }
+    const resetStates = () => {
+      setSelectedProductForPublish('');
+      setSelectedProductForPublishId('');
+      setSelectedProductDescription('');
+      setSelectedProduct({});
+      setCheckedForOnlineStore(false);
+      setCheckForActivations(false);
+      setSelectedActivations(new Set());
     }
     const handlePublishModalClose = () => {
-      shopify.modal.hide('publish-modal');
-      setSelectedProductForPublish('');
+      setModalOpen(false);
+      resetStates();
     }
-    const handlePublishModalSubmit = (onlineStore, activations) => {
-      console.log({ onlineStore, activations });
-      shopify.modal.hide('publish-modal');
-
-      //TODO: remove later
+    const handlePublishModalSubmit = async (onlineStore, activations, newDescription, product) => {
+      const { resourcePublicationOnCurrentPublication, admin_graphql_api_id } = product;
+      let isError = false;
+      //Publish product to sales channel if it hasn't been published yet
+      if (!resourcePublicationOnCurrentPublication) {
+        const postOptions = {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({ productId: admin_graphql_api_id }),
+        };
+        try {
+          await publishProduct(postOptions);
+        } catch (error) {
+          console.error({ error });
+        }
+      }
+      
+      const activationIds = Array.from(activations);
+      console.log({ onlineStore, activationIds, newDescription, product });
+      
+      setModalOpen(false);
+      // Store product if not added to platform
+      const platformProduct = shopifyProducts.find((shopifyProduct) => shopifyProduct.productId === product.id);
+      if (!platformProduct && !isError) {
+        await storeProduct(product).then((storeProductRes) => {
+          console.log({ storeProductRes });
+        }).catch((error) => {
+          console.error({ error });
+          isError = true;
+        });
+      }
+      //Update Product
+      if (!isError) {
+        const payload = {
+          productId: product.id,
+          description: newDescription,
+          onlineStore,
+          activationIds,
+        }
+        await updateProduct(payload).then((updateProductRes) => {
+          console.log({ updateProductRes });
+        }).catch((error) => {
+          console.error({ error });
+          isError = true;
+        });
+      }
+      if (isError) {
+        refetchShopifyProducts();
+        setToastContent(`Failed to publish ${title}.`);
+        setToastError(true);
+        setToastActive(true);
+        resetStates();
+        return;
+      }
+      refetchShopifyProducts();
       setToastContent(`${selectedProductForPublish} published successfully!`);
       setToastError(false);
       setToastActive(true);
-      setSelectedProductForPublish('');
+      resetStates();
     }
+
     const toastMarkup = toastActive && (
       <Toast
         content={toastContent}
@@ -152,7 +224,10 @@ import {
       />
     );
     const rowMarkup = products?.products?.map(
-      ({ id, title, adminGraphqlApiId, variants,image, images, resourcePublicationOnCurrentPublication }, index) => {
+      (product, index) => {
+        const { id, title, variants,image, images, resourcePublicationOnCurrentPublication } = product;
+        const isAddedToOmniChannel = resourcePublicationOnCurrentPublication;
+        const platformProduct = shopifyProducts.find((shopifyProduct) => shopifyProduct.productId === id);
         return (
           <IndexTable.Row
           id={id}
@@ -183,24 +258,31 @@ import {
               0
             )}
           </IndexTable.Cell>
-          <IndexTable.Cell>N/A</IndexTable.Cell>
-          {/* <IndexTable.Cell>
-            {resourcePublicationOnCurrentPublication?.publication?.id === publicationId ? (
-              <Button variant="disabled">Published</Button>
-            ) : (
-              <Button
-              variant="primary"
-              onClick={(e) => publishHandler(e, id, title)}
-              disabled={isPublishing}
-            >
-              Publish to online store
-            </Button>
-            )}
-          </IndexTable.Cell> */}
+          <IndexTable.Cell>{isAddedToOmniChannel ? 'Yes' : 'No'}</IndexTable.Cell>
+          <IndexTable.Cell>
+            <BlockStack>
+              {platformProduct ? 
+              (<BlockStack>
+                <InlineStack wrap={false}>
+                  <CheckCircleIcon fill="green" width={20} height={20}  style={{ marginRight: '6px'}}/>
+                  <Text>Added to OmniChannel</Text>
+                </InlineStack>
+                  <InlineStack wrap={false}>
+                    {platformProduct?.status === 'pending' && <ClockIcon fill="gray" width={20} height={20}  style={{ marginRight: '6px'}}/>}
+                    <Text>Status:</Text>
+                    <div style={{ textTransform: 'capitalize', marginLeft: '6px', fontWeight: "bold" }}>{platformProduct?.status}</div>
+                  </InlineStack>
+              </BlockStack>)
+              : (<InlineStack>
+                {/* //Add icon */}
+                <Text>Not Added to OmniChannel</Text>
+              </InlineStack>)}
+            </BlockStack>
+          </IndexTable.Cell>
            <IndexTable.Cell>
               <Button
                 variant="primary"
-                onClick={(e) => publishHandler(e, adminGraphqlApiId, title)}
+                onClick={(e) => publishHandler(e, product)}
                 disabled={isPublishing}
               >
                 Add to online store / Activations
@@ -233,23 +315,18 @@ import {
                 { title: 'Image' },
                 { title: 'Product name' },
                 { title: 'Product variants' },
-                { title: 'Current inventory' },
+                { title: 'Inventory' },
+                { title: 'Published to Sales Channel' },
                 { title: 'Omnichannel Status' },
                 { title: 'Actions'}
               ]}
-              loading={isLoading}
+              loading={isLoading || isFetchingShopifyProducts || isStoringProduct || isUpdatingProduct}
               selectable={false}
             >
               {rowMarkup}
             </IndexTable>
             
           </Card>
-           {/* <Card>
-              <BlockStack gap="200">
-                <Text fontWeight="bold">Selection JSON</Text>
-                <pre>{productsJson}</pre>
-              </BlockStack>
-            </Card> */}
             {selectedProducts?.length > 0 && (
               <Card>
               <BlockStack gap="200">
@@ -259,71 +336,64 @@ import {
             </Card>
             )}
           </Layout.Section>
-          <Modal id="publish-modal" variant="base">
+          <Modal
+            open={modalOpen}
+            onClose={handleChange}
+            title="Publish to LDC Online Store / Activations"
+            primaryAction={{
+              content: 'Save',
+              disabled: !allowSave,
+              onAction: () => handlePublishModalSubmit(checkedForOnlineStore, selectedActivations, newDescription, selectedProduct),
+            }}
+            secondaryActions={[
+              {
+                content: 'Cancel',
+                onAction: handlePublishModalClose,
+              },
+            ]}
+          >
+            <Modal.Section>
             <div style={{ maxWidth: '600px', padding: '24px 24px' }}>
-              <div style={{ marginBottom: '16px' }}>
-              <Text>Where do you want to publish <strong>{selectedProductForPublish}</strong> to ? </Text>
-              </div>
-              <BlockStack align="center" inlineAlign="left">
-                <Checkbox
-                  label="Online Store"
-                  checked={checkedForOnlineStore}
-                  onChange={handleCheckedForOnlineStore}
-                />
-                {
-                  checkedForOnlineStore && 
-                   <div style={{ padding: '8px 0px'}}>
-                      <TextField
-                        value={newDescription}
-                        onChange={setNewDescription}
-                        label="Description"
-                        type="text"
-                        helpText={
-                          <span>
-                            A slightly different description for SEO purposes
-                          </span>
-                        }
-                      size="medium"
-                    / >
-                   </div>
-                  }
-                <Checkbox
-                  label="Activations"
-                  checked={checkForActivations}
-                  onChange={handleCheckedForActivations}
-                />
-                {checkForActivations && activations.length > 0 && (
-                  <div style={{ padding: '16px' }}>
-                    <Text>Which Activations do you want to sell the product in ?</Text>
-                      <BlockStack align="center" inlineAlign="left">
-                        {activations.map((activation) => {
-                          console.log({ activation });
-                          return <Checkbox
-                            key={activation.activationId}
-                            label={activation.name}
-                            checked={selectedActivations.has(activation.activationId)}
-                            onChange={(newChecked) => handleCheckedForSelectedActivations(newChecked, activation.activationId)}
-                          />
-                        })}
-                      </BlockStack>
-                  </div>
-                )}
-                <div style={{ marginTop: "16px"}}>
-                <InlineStack gap="200">
-                  <Button variant="tertiary" tone="critical" onClick={handlePublishModalClose}>
-                    Cancel
-                  </Button>
-                  <Button variant="primary" onClick={() => handlePublishModalSubmit(checkedForOnlineStore, selectedActivations)}>
-                    Publish
-                  </Button>
-                </InlineStack>
+                <div style={{ marginBottom: '16px' }}>
+                <Text>Where do you want to publish <strong>{selectedProductForPublish}</strong> to ? </Text>
                 </div>
-              </BlockStack>
-            </div>
-            <TitleBar title={`Publish to LDC Store`}>
-              {/* <button style={{ backgroundColor: 'red'}} onClick={handlePublishModalClose}>Cancel</button> */}
-            </TitleBar>
-          </Modal>
+                <BlockStack align="center" inlineAlign="left">
+                  <Checkbox
+                    label="Online Store"
+                    checked={checkedForOnlineStore}
+                    onChange={handleCheckedForOnlineStore}
+                  />
+                  {
+                    checkedForOnlineStore && 
+                    <div style={{ padding: '8px 0px', height: '212px', marginBottom: '16px' }}>
+                        <RichTextEditor initialHtml={selectedProductDescription} setHtml={setNewDescription} />
+                    </div>
+                    }
+                  <Checkbox
+                    label="Activations"
+                    checked={checkForActivations}
+                    onChange={handleCheckedForActivations}
+                  />
+                  {checkForActivations && activations.length > 0 && (
+                    <div style={{ padding: '16px' }}>
+                      <Text>Which Activations do you want to sell the product in ?</Text>
+                        <BlockStack align="center" inlineAlign="left">
+                          {activations.map((activation) => {
+                            console.log({ activation });
+                            return <Checkbox
+                              key={activation.activationId}
+                              label={activation.name}
+                              checked={selectedActivations.has(activation.activationId)}
+                              onChange={(newChecked) => handleCheckedForSelectedActivations(newChecked, activation.activationId)}
+                            />
+                          })}
+                        </BlockStack>
+                    </div>
+                  )}
+                </BlockStack>
+              </div>
+            </Modal.Section>
+        </Modal>
           </Layout>
         </Page>
         {toastMarkup}

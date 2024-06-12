@@ -141,7 +141,7 @@ const HomePage = () => {
                       <Button
                         variant="primary"
                         onClick={() => {
-                          window.open('https://clubhouse.lonedesignclub.com/', '_blank');
+                          window.open('https://lonedesignclub-web-uat.vercel.app/', '_blank');
                         }}
                       >
                         Subscribe to Clubhouse

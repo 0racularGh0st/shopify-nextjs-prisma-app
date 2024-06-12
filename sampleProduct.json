@@ -1,216 +1,360 @@
 {
-    "admin_graphql_api_id": "gid://shopify/Product/10055037944111",
-    "body_html": "<p>This <b>PREMIUM</b> <i>snowboard</i> is so <b>SUPER</b><i>DUPER</i> awesome! Yo!</p>",
-    "created_at": "2024-05-14T17:43:39+01:00",
-    "id": 10055037944111,
-    "product_type": "snowboard",
-    "published_at": "2024-05-14T17:43:39+01:00",
-    "template_suffix": null,
-    "title": "The Complete Snowboard Yo",
-    "updated_at": "2024-06-04T15:11:39+01:00",
-    "vendor": "Snowboard Vendor",
-    "status": "active",
-    "tags": "Premium, Snow, Snowboard, Sport, Winter",
-    "variants": [
-      {
-        "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131851055",
-        "barcode": null,
-        "compare_at_price": null,
-        "created_at": "2024-05-14T17:43:39+01:00",
-        "fulfillment_service": "manual",
-        "id": 49699131851055,
-        "inventory_management": "shopify",
-        "inventory_policy": "deny",
-        "position": 1,
-        "price": "699.95",
-        "product_id": 10055037944111,
-        "sku": "",
-        "taxable": true,
-        "title": "Ice",
-        "updated_at": "2024-05-14T17:43:39+01:00",
-        "option1": "Ice",
-        "option2": null,
-        "option3": null,
-        "grams": 4536,
-        "image_id": null,
-        "weight": 10,
-        "weight_unit": "lb",
-        "inventory_item_id": 51672241832239,
-        "inventory_quantity": 10,
-        "old_inventory_quantity": 10,
-        "requires_shipping": true
-      },
-      {
-        "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131883823",
-        "barcode": null,
-        "compare_at_price": null,
-        "created_at": "2024-05-14T17:43:39+01:00",
-        "fulfillment_service": "manual",
-        "id": 49699131883823,
-        "inventory_management": "shopify",
-        "inventory_policy": "deny",
-        "position": 2,
-        "price": "699.95",
-        "product_id": 10055037944111,
-        "sku": "",
-        "taxable": true,
-        "title": "Dawn",
-        "updated_at": "2024-05-14T17:43:39+01:00",
-        "option1": "Dawn",
-        "option2": null,
-        "option3": null,
-        "grams": 4536,
-        "image_id": null,
-        "weight": 10,
-        "weight_unit": "lb",
-        "inventory_item_id": 51672241865007,
-        "inventory_quantity": 10,
-        "old_inventory_quantity": 10,
-        "requires_shipping": true
-      },
-      {
-        "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131916591",
-        "barcode": null,
-        "compare_at_price": null,
-        "created_at": "2024-05-14T17:43:39+01:00",
-        "fulfillment_service": "manual",
-        "id": 49699131916591,
-        "inventory_management": "shopify",
-        "inventory_policy": "deny",
-        "position": 3,
-        "price": "699.95",
-        "product_id": 10055037944111,
-        "sku": "",
-        "taxable": true,
-        "title": "Powder",
-        "updated_at": "2024-05-14T17:43:39+01:00",
-        "option1": "Powder",
-        "option2": null,
-        "option3": null,
-        "grams": 4536,
-        "image_id": null,
-        "weight": 10,
-        "weight_unit": "lb",
-        "inventory_item_id": 51672241897775,
-        "inventory_quantity": 10,
-        "old_inventory_quantity": 10,
-        "requires_shipping": true
-      },
-      {
-        "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131949359",
-        "barcode": null,
-        "compare_at_price": null,
-        "created_at": "2024-05-14T17:43:39+01:00",
-        "fulfillment_service": "manual",
-        "id": 49699131949359,
-        "inventory_management": "shopify",
-        "inventory_policy": "deny",
-        "position": 4,
-        "price": "699.95",
-        "product_id": 10055037944111,
-        "sku": "",
-        "taxable": true,
-        "title": "Electric",
-        "updated_at": "2024-05-14T17:43:39+01:00",
-        "option1": "Electric",
-        "option2": null,
-        "option3": null,
-        "grams": 4536,
-        "image_id": null,
-        "weight": 10,
-        "weight_unit": "lb",
-        "inventory_item_id": 51672241930543,
-        "inventory_quantity": 10,
-        "old_inventory_quantity": 10,
-        "requires_shipping": true
-      },
-      {
-        "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131982127",
-        "barcode": null,
-        "compare_at_price": null,
-        "created_at": "2024-05-14T17:43:39+01:00",
-        "fulfillment_service": "manual",
-        "id": 49699131982127,
-        "inventory_management": "shopify",
-        "inventory_policy": "deny",
-        "position": 5,
-        "price": "699.95",
-        "product_id": 10055037944111,
-        "sku": "",
-        "taxable": true,
-        "title": "Sunset",
-        "updated_at": "2024-05-14T17:43:39+01:00",
-        "option1": "Sunset",
-        "option2": null,
-        "option3": null,
-        "grams": 4536,
-        "image_id": null,
-        "weight": 10,
-        "weight_unit": "lb",
-        "inventory_item_id": 51672241963311,
-        "inventory_quantity": 10,
-        "old_inventory_quantity": 10,
-        "requires_shipping": true
-      }
-    ],
-    "options": [
-      {
-        "name": "Color",
-        "id": 12458327965999,
-        "product_id": 10055037944111,
-        "position": 1,
-        "values": [
-          "Ice",
-          "Dawn",
-          "Powder",
-          "Electric",
-          "Sunset"
-        ]
-      },
-      {
-        "name": "Size",
-        "id": 12458327965999,
-        "product_id": 10055037944111,
-        "position": 1,
-        "values": [
-          "S",
-          "M"
-        ]
-      }
-    ],
-    "images": [
-      {
-        "id": 45707971854639,
-        "product_id": 10055037944111,
-        "position": 1,
-        "created_at": "2024-05-14T17:43:39+01:00",
-        "updated_at": "2024-05-14T17:43:39+01:00",
-        "alt": "Top and bottom view of a snowboard. The top view shows abstract circles and lines in shades of teal.\n          The bottom view shows abstract circles and lines in shades of purple and blue with the text “SHOPIFY” in a\n          sans serif typeface on top.",
-        "width": 1600,
-        "height": 1600,
-        "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
-        "variant_ids": [],
-        "admin_graphql_api_id": "gid://shopify/ProductImage/45707971854639"
-      }
-    ],
-    "image": {
-      "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+  "createdAt": "2024-05-29T15:24:30Z",
+  "description": "The final shirt that we deserve!",
+  "descriptionHtml": "<p>The final shirt that we deserve!</p>\n<!---->",
+  "featuredImage": {
+    "altText": null,
+    "height": 80,
+    "id": "gid://shopify/ProductImage/45908769440047",
+    "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "width": 80
+  },
+  "admin_graphql_api_id": "gid://shopify/Product/10122325262639",
+  "id": "10122325262639",
+  "resourcePublicationOnCurrentPublication": {
+    "publication": {
+      "name": "LDC Omnichannel Test",
+      "id": "gid://shopify/Publication/234266919215"
     },
-    "variant_ids": [
-      {
-        "id": 49699131851055
+    "publishDate": "2024-06-04T07:44:52Z",
+    "isPublished": true
+  },
+  "images": [
+    {
+      "altText": "",
+      "height": 80,
+      "id": "gid://shopify/ProductImage/45908769440047",
+      "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+      "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+      "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+      "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+      "width": 80
+    },
+    {
+      "altText": "",
+      "height": 1100,
+      "id": "gid://shopify/ProductImage/45991738802479",
+      "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+      "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+      "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+      "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+      "width": 531
+    },
+    {
+      "altText": "",
+      "height": 1100,
+      "id": "gid://shopify/ProductImage/45991738835247",
+      "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+      "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+      "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+      "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+      "width": 600
+    },
+    {
+      "altText": "",
+      "height": 48,
+      "id": "gid://shopify/ProductImage/45707982143791",
+      "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/mongodb-icon.png?v=1715705058",
+      "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/mongodb-icon.png?v=1715705058",
+      "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/mongodb-icon.png?v=1715705058",
+      "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/mongodb-icon.png?v=1715705058",
+      "width": 48
+    }
+  ],
+  "onlineStoreUrl": null,
+  "options": [
+    {
+      "id": "gid://shopify/ProductOption/12561871831343",
+      "name": "Color",
+      "values": [
+        "Black"
+      ]
+    },
+    {
+      "id": "gid://shopify/ProductOption/12561871864111",
+      "name": "Size",
+      "values": [
+        "s",
+        "m"
+      ]
+    }
+  ],
+  "productType": "",
+  "publishedAt": "2024-05-29T15:24:30Z",
+  "seo": {
+    "description": null,
+    "title": null
+  },
+  "tags": [],
+  "title": "Final Shirt2",
+  "totalInventory": 200,
+  "updatedAt": "2024-06-05T12:28:45Z",
+  "variants": [
+    {
+      "id": "49976904745263",
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/49976904745263",
+      "availableForSale": true,
+      "barcode": "",
+      "image": {
+        "altText": null,
+        "height": 1100,
+        "id": "gid://shopify/ProductImage/45991738802479",
+        "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+        "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+        "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+        "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51n9covJ-bL._AC_UY1100_9971a952-1dd5-4e5b-8037-d68d8a4a6f96.jpg?v=1717571710",
+        "width": 531
       },
-      {
-        "id": 49699131883823
+      "requiresShipping": true,
+      "selectedOptions": [
+        {
+          "name": "Color",
+          "value": "Black"
+        },
+        {
+          "name": "Size",
+          "value": "s"
+        }
+      ],
+      "sku": "FS123",
+      "taxable": true,
+      "title": "Black / s",
+      "price": "10.00",
+      "weight": 0.5,
+      "weightUnit": "KILOGRAMS",
+      "inventoryQuantity": 150
+    },
+    {
+      "id": "49976904778031",
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/49976904778031",
+      "availableForSale": true,
+      "barcode": "",
+      "image": {
+        "altText": null,
+        "height": 1100,
+        "id": "gid://shopify/ProductImage/45991738835247",
+        "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+        "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+        "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+        "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/51FmNDWH-VL._AC_UY1100.jpg?v=1717571672",
+        "width": 600
       },
-      {
-        "id": 49699131916591
-      },
-      {
-        "id": 49699131949359
-      },
-      {
-        "id": 49699131982127
-      }
-    ]
+      "requiresShipping": true,
+      "selectedOptions": [
+        {
+          "name": "Color",
+          "value": "Black"
+        },
+        {
+          "name": "Size",
+          "value": "m"
+        }
+      ],
+      "sku": "FS124",
+      "taxable": true,
+      "title": "Black / m",
+      "price": "10.00",
+      "weight": 0.5,
+      "weightUnit": "KILOGRAMS",
+      "inventoryQuantity": 50
+    }
+  ],
+  "vendor": "Channel store test",
+  "image": {
+    "altText": null,
+    "height": 80,
+    "id": "gid://shopify/ProductImage/45908769440047",
+    "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/UserAvatarPlaceholder.png?v=1716996221",
+    "width": 80
   }
+}
+6:43
+Another product:
+{
+  "createdAt": "2024-05-14T16:43:39Z",
+  "description": "This PREMIUM snowboard is so SUPERDUPER awesome! Yo!",
+  "descriptionHtml": "<p>This <b>PREMIUM</b> <i>snowboard</i> is so <b>SUPER</b><i>DUPER</i> awesome! Yo!</p>",
+  "featuredImage": {
+    "height": 1600,
+    "id": "gid://shopify/ProductImage/45707971854639",
+    "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "width": 1600
+  },
+  "admin_graphql_api_id": "gid://shopify/Product/10055037944111",
+  "id": "10055037944111",
+  "resourcePublicationOnCurrentPublication": {
+    "publication": {
+      "name": "LDC Omnichannel Test",
+      "id": "gid://shopify/Publication/234266919215"
+    },
+    "publishDate": "2024-06-04T07:44:51Z",
+    "isPublished": true
+  },
+  "images": [
+    {
+      "height": 1600,
+      "id": "gid://shopify/ProductImage/45707971854639",
+      "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+      "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+      "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+      "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+      "width": 1600
+    }
+  ],
+  "onlineStoreUrl": null,
+  "options": [
+    {
+      "id": "gid://shopify/ProductOption/12458327965999",
+      "name": "Color",
+      "values": [
+        "Ice",
+        "Dawn",
+        "Powder",
+        "Electric",
+        "Sunset"
+      ]
+    }
+  ],
+  "productType": "snowboard",
+  "publishedAt": "2024-05-14T16:43:39Z",
+  "seo": {
+    "description": "snowboard winter sport snowboarding",
+    "title": "Complete Snowboard"
+  },
+  "tags": [
+    "Premium",
+    "Snow",
+    "Snowboard",
+    "Sport",
+    "Winter"
+  ],
+  "title": "The Complete Snowboard Yo",
+  "totalInventory": 50,
+  "updatedAt": "2024-06-04T14:11:39Z",
+  "variants": [
+    {
+      "id": "49699131851055",
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131851055",
+      "availableForSale": true,
+      "barcode": null,
+      "image": null,
+      "requiresShipping": true,
+      "selectedOptions": [
+        {
+          "name": "Color",
+          "value": "Ice"
+        }
+      ],
+      "sku": "",
+      "taxable": true,
+      "title": "Ice",
+      "price": "699.95",
+      "weight": 10,
+      "weightUnit": "POUNDS",
+      "inventoryQuantity": 10
+    },
+    {
+      "id": "49699131883823",
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131883823",
+      "availableForSale": true,
+      "barcode": null,
+      "image": null,
+      "requiresShipping": true,
+      "selectedOptions": [
+        {
+          "name": "Color",
+          "value": "Dawn"
+        }
+      ],
+      "sku": "",
+      "taxable": true,
+      "title": "Dawn",
+      "price": "699.95",
+      "weight": 10,
+      "weightUnit": "POUNDS",
+      "inventoryQuantity": 10
+    },
+    {
+      "id": "49699131916591",
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131916591",
+      "availableForSale": true,
+      "barcode": null,
+      "image": null,
+      "requiresShipping": true,
+      "selectedOptions": [
+        {
+          "name": "Color",
+          "value": "Powder"
+        }
+      ],
+      "sku": "",
+      "taxable": true,
+      "title": "Powder",
+      "price": "699.95",
+      "weight": 10,
+      "weightUnit": "POUNDS",
+      "inventoryQuantity": 10
+    },
+    {
+      "id": "49699131949359",
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131949359",
+      "availableForSale": true,
+      "barcode": null,
+      "image": null,
+      "requiresShipping": true,
+      "selectedOptions": [
+        {
+          "name": "Color",
+          "value": "Electric"
+        }
+      ],
+      "sku": "",
+      "taxable": true,
+      "title": "Electric",
+      "price": "699.95",
+      "weight": 10,
+      "weightUnit": "POUNDS",
+      "inventoryQuantity": 10
+    },
+    {
+      "id": "49699131982127",
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/49699131982127",
+      "availableForSale": true,
+      "barcode": null,
+      "image": null,
+      "requiresShipping": true,
+      "selectedOptions": [
+        {
+          "name": "Color",
+          "value": "Sunset"
+        }
+      ],
+      "sku": "",
+      "taxable": true,
+      "title": "Sunset",
+      "price": "699.95",
+      "weight": 10,
+      "weightUnit": "POUNDS",
+      "inventoryQuantity": 10
+    }
+  ],
+  "vendor": "Snowboard Vendor",
+  "image": {
+    "height": 1600,
+    "id": "gid://shopify/ProductImage/45707971854639",
+    "originalSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "src": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "transformedSrc": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "url": "https://cdn.shopify.com/s/files/1/0880/6111/6719/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1715705019",
+    "width": 1600
+  }
+}

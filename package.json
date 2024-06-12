@@ -23,7 +23,7 @@
     "-----> Shopify <-----": "",
     "g:install": "npm i -g @shopify/app@latest @shopify/cli@latest",
     "shopify": "shopify",
-    "update:config": "node _developer/tomlWriter.js && shopify app deploy",
+    "update:config": "node _developer/tomlWriter.js && shopify app deploy -f",
     "update:url": "node _developer/updateDashboard.js",
     "-----> Database <-----": "",
     "pg:create": "mkdir database; pg_ctl -D database init",
@@ -40,12 +40,18 @@
     "@prisma/client": "^5.14.0",
     "@shopify/app-bridge-react": "^4.1.3",
     "@shopify/polaris": "^13.4.0",
+    "@shopify/polaris-icons": "^9.1.1",
     "@shopify/shopify-api": "^10.0.0",
+    "@tinymce/tinymce-react": "^5.0.1",
     "cryptr": "^6.3.0",
     "next": "14.2.3",
     "next-api-middleware": "^3.0.0",
+    "quill": "^2.0.2",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-quill": "^2.0.0",
+    "swr": "^2.2.5",
+    "tinymce": "^7.1.2"
   },
   "devDependencies": {
     "@iarna/toml": "^2.2.5",
