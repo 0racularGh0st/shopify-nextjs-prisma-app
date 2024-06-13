@@ -46,15 +46,15 @@ const isInitialLoad = async (context) => {
         session: offlineSession,
       });
 
-      const isFreshInstall = await prisma.stores.findFirst({
+      const isFreshInstall = await prisma.shopify_stores.findFirst({
         where: {
           shop: onlineSession.shop,
         },
       });
 
-      if (!isFreshInstall || isFreshInstall?.isActive === false) {
+      if (!isFreshInstall || isFreshInstall?.is_active === false) {
         // !isFreshInstall -> New Install
-        // isFreshInstall?.isActive === false -> Reinstall
+        // isFreshInstall?.is_active === false -> Reinstall
         await freshInstall({ shop: onlineSession.shop });
       }
 

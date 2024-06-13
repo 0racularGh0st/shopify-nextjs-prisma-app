@@ -15,17 +15,20 @@ const freshInstall = async ({ shop }) => {
   try {
     console.log("This is a fresh install, running onboarding functions");
 
-    await prisma.stores.upsert({
+    await prisma.shopify_stores.upsert({
       where: {
         shop: shop,
       },
       update: {
         shop: shop,
-        isActive: true,
+        is_active: true,
+        updated_at: new Date(),
       },
       create: {
         shop: shop,
-        isActive: true,
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date(),
       },
     });
 

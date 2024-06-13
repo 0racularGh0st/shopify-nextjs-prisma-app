@@ -17,9 +17,9 @@ The older way of doing auth is still supported from Shopify but for embedded app
 A new check also happens here, `isFreshInstall`. Since the database structure is kept the same to ensure smooth transition to the new auth, we can now check if the install was a fresh one. If the store doesn't exist in the `store` model, it's a new install, but if it does have a `Bool` value, that means it's either already installed or is a reinstall. While I've merged these in an if condition, you can break them apart and run your own checks if required.
 
 ```javascript
-if (!isFreshInstall || isFreshInstall?.isActive === false) {
+if (!isFreshInstall || isFreshInstall?.is_active === false) {
   // !isFreshInstall -> New Install
-  // isFreshInstall?.isActive === false -> Reinstall
+  // isFreshInstall?.is_active === false -> Reinstall
   await freshInstall({ shop: onlineSession.shop });
 }
 ```

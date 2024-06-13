@@ -27,13 +27,20 @@ import {
   import { useUpdateProduct } from "@/common/hooks/useUpdateProduct";
   import RichTextEditor from "@/components/editor";
   import { arraysEqual } from "@/common/utils/helpers";
+  import { useAuth } from "@/common/hooks/useAuth";
 
   const SelectProductsIndex = () => {
+    const { clubhouseUser } = useAuth();
+
+    useEffect(() => {
+      if (clubhouseUser && !clubhouseUser?.id) {
+        router.push('/');
+      }
+    }, [clubhouseUser])
     const { activations } = useGetActivations();
     const { shopifyProducts, refetchShopifyProducts, isLoading: isFetchingShopifyProducts } = useGetShopifyProducts();
     const { storeProduct, isStoringProduct } = useStoreProduct();
     const { updateProduct, isUpdatingProduct } = useUpdateProduct();
-    console.log({ activations, shopifyProducts });
     const resourceName = {
       singular: 'product',
       plural: 'products',
@@ -42,6 +49,7 @@ import {
 
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [products, fetchProducts, isLoading] = useDataFetcher({ products: []}, "/api/apps/brand/brandProducts");
+    const [shop, fetchShop, isFetchShopLoading] = useDataFetcher({ shop: {}}, "/api/apps/brand/shop");
     const [publishData, publishProduct, isPublishing] = useDataFetcher({}, "/api/apps/brand/publishProducts");
     const [toastActive, setToastActive] = useState(false);
     const [toastContent, setToastContent] = useState('');
@@ -60,7 +68,6 @@ import {
     const allowSave = useMemo(() => {
       let result = false;
       const platformProduct = shopifyProducts.find((product) => product.productId === selectedProductForPublishId);
-      console.log({ selectedProduct, shopifyProducts, newDescription, selectedProductDescription, selectedActivations, checkedForOnlineStore, checkForActivations, platformProduct})
       if (!platformProduct && !checkedForOnlineStore && !checkForActivations) {
         return false;
       }
@@ -83,13 +90,12 @@ import {
       if (platformProduct && !checkForActivations && platformProduct?.activationIds?.length > 0) {
         result = true;
       }
-      console.log({ result });
       return result;
     }, [selectedProduct, shopifyProducts, newDescription, selectedProductDescription, selectedActivations, checkedForOnlineStore, checkForActivations ]);
     useEffect(() => {
+      fetchShop();
       fetchProducts();
     }, []);
-
 
     const handleCheckedForOnlineStore = useCallback(
       (newChecked) => setCheckedForOnlineStore(newChecked),
@@ -102,7 +108,6 @@ import {
 
     const handleCheckedForSelectedActivations = useCallback(
       (newChecked, activationId) => {
-        console.log({ newChecked, activationId });
         const checkedActivations = new Set(selectedActivations);
         if (newChecked) {
           checkedActivations.add(activationId);
@@ -173,14 +178,12 @@ import {
       }
       
       const activationIds = Array.from(activations);
-      console.log({ onlineStore, activationIds, newDescription, product });
       
       setModalOpen(false);
       // Store product if not added to platform
       const platformProduct = shopifyProducts.find((shopifyProduct) => shopifyProduct.productId === product.id);
       if (!platformProduct && !isError) {
-        await storeProduct(product).then((storeProductRes) => {
-          console.log({ storeProductRes });
+        await storeProduct({ ...product, currencyCode: shop?.currencyCode ?? ''}).then((storeProductRes) => {
         }).catch((error) => {
           console.error({ error });
           isError = true;
@@ -195,7 +198,6 @@ import {
           activationIds,
         }
         await updateProduct(payload).then((updateProductRes) => {
-          console.log({ updateProductRes });
         }).catch((error) => {
           console.error({ error });
           isError = true;
@@ -379,7 +381,6 @@ import {
                       <Text>Which Activations do you want to sell the product in ?</Text>
                         <BlockStack align="center" inlineAlign="left">
                           {activations.map((activation) => {
-                            console.log({ activation });
                             return <Checkbox
                               key={activation.activationId}
                               label={activation.name}

@@ -11,9 +11,7 @@ const handler = async (req, res) => {
         req,
         res,
       });
-      console.log("Req body->>>", req.body);
       const productId = req.body?.productId;
-      console.log("productId->>>", productId);
       const response = await client.request(`mutation publishablePublish($id: ID!, $input: [PublicationInput!]!) {
         publishablePublish(id: $id, input: $input) {
           userErrors {
@@ -32,7 +30,6 @@ const handler = async (req, res) => {
       }
     );
    
-    console.log("Response->>>", JSON.stringify(response));
       if (response?.publishablePublish?.userErrors?.length > 0) {
         return res.status(400).json({ errors: response.publishablePublish.userErrors });
       }

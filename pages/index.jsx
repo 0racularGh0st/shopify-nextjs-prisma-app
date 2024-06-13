@@ -42,7 +42,6 @@ const HomePage = () => {
   const accountName = "";
   
   useEffect(() => {
-    console.log({ clubhouseUser, isSubscribed });
     if (clubhouseUser?.id) {
       setConnected(true);
       return;
@@ -55,9 +54,7 @@ const HomePage = () => {
   };
 
   const handleSubmit = async () => {
-    //From FE
     const res = await signin({email, password}).then((user) => {
-      console.log({ user });
       return user;
     }).catch((error) => {
       console.log({ error });
@@ -69,7 +66,6 @@ const HomePage = () => {
       setConnected(true);
     }
     shopify.modal.hide('my-modal')
-    console.log({ res });
 }
   const handleEmailChange = useCallback((value) => setEmail(value), []);
   const handlePasswordChange = useCallback((value) => setPassword(value), []);

@@ -12,11 +12,11 @@ const appUninstallHandler = async (topic, shop, webhookRequestBody) => {
     /** @type {AppUninstalled} */
     const webhookBody = JSON.parse(webhookRequestBody);
 
-    await prisma.session.deleteMany({ where: { shop } });
-    await prisma.stores.upsert({
+    await prisma.shopify_session.deleteMany({ where: { shop } });
+    await prisma.shopify_stores.upsert({
       where: { shop: shop },
-      update: { isActive: false },
-      create: { shop: shop, isActive: false },
+      update: { is_active: false },
+      create: { shop: shop, is_active: false },
     });
   } catch (e) {
     console.log(e);

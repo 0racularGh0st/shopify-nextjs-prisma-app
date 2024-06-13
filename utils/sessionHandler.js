@@ -9,17 +9,19 @@ import prisma from "./prisma.js";
  * @returns {Promise<boolean>} Returns true if the operation was successful.
  */
 const storeSession = async (session) => {
-  console.log(JSON.stringify(session, null, 2));
-  await prisma.session.upsert({
-    where: { id: session.id },
+  await prisma.shopify_session.upsert({
+    where: { shop_id: session.id },
     update: {
       content: cryption.encrypt(JSON.stringify(session)),
       shop: session.shop,
+      updated_at: new Date(),
     },
     create: {
-      id: session.id,
+      shop_id: session.id,
       content: cryption.encrypt(JSON.stringify(session)),
       shop: session.shop,
+      created_at: new Date(),
+      updated_at: new Date(),
     },
   });
 
@@ -33,7 +35,7 @@ const storeSession = async (session) => {
  * @returns {Promise<Session|undefined>} Returns the Shopify session object or undefined if not found.
  */
 const loadSession = async (id) => {
-  const sessionResult = await prisma.session.findUnique({ where: { id } });
+  const sessionResult = await prisma.shopify_session.findUnique({ where: { shop_id: id } });
 
   if (sessionResult === null) {
     return undefined;
@@ -52,7 +54,7 @@ const loadSession = async (id) => {
  * @returns {Promise<boolean>} Returns true if the operation was successful.
  */
 const deleteSession = async (id) => {
-  await prisma.session.deleteMany({ where: { id } });
+  await prisma.shopify_session.deleteMany({ where: { shop_id: id } });
 
   return true;
 };

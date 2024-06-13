@@ -3,6 +3,7 @@
 ## Dev only files and folders
 # _developer/
 database/
+platformdb/
 shopify.*.toml
 
 # dependencies
